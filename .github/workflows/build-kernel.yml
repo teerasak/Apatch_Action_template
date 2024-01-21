@@ -25,12 +25,12 @@ jobs:
         echo "USE_OVERLAYFS=$(cat config.env | grep "USE_OVERLAYFS" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
         echo "NEED_DTBO=$(cat config.env | grep "NEED_DTBO" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
         echo "USE_APATCH=$(cat config.env | grep "USE_APATCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
-        echo "USE_CUSTOM_CLANG=$(cat $CONFIG_ENV | grep -w "USE_CUSTOM_CLANG" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
-        echo "CUSTOM_CLANG_SOURCE=$(cat $CONFIG_ENV | grep -w "CUSTOM_CLANG_SOURCE" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
-        echo "CUSTOM_CLANG_BRANCH=$(cat $CONFIG_ENV | grep -w "CUSTOM_CLANG_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
-        echo "CLANG_BRANCH=$(cat $CONFIG_ENV | grep -w "CLANG_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
-        echo "CLANG_VERSION=$(cat $CONFIG_ENV | grep -w "CLANG_VERSION" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
-        echo "ENABLE_CCACHE=$(cat $CONFIG_ENV | grep -w "ENABLE_CCACHE" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+        echo "USE_CUSTOM_CLANG=$(cat config.env | grep -w "USE_CUSTOM_CLANG" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+        echo "CUSTOM_CLANG_SOURCE=$(cat config.env | grep -w "CUSTOM_CLANG_SOURCE" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+        echo "CUSTOM_CLANG_BRANCH=$(cat config.env | grep -w "CUSTOM_CLANG_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+        echo "CLANG_BRANCH=$(cat config.env | grep -w "CLANG_BRANCH" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+        echo "CLANG_VERSION=$(cat config.env | grep -w "CLANG_VERSION" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
+        echo "ENABLE_CCACHE=$(cat config.env | grep -w "ENABLE_CCACHE" | head -n 1 | cut -d "=" -f 2)" >> $GITHUB_ENV
 
     - name: Setup build kernel environment
       run: |
@@ -77,6 +77,9 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
 
         echo "CONFIG_MODULES=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+        echo "CONFIG_MODULE_UNLOAD=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+        echo "CONFIG_MODULE_FORCE_LOAD=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
+        echo "CONFIG_MODULE_FORCE_UNLOAD=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
         echo "CONFIG_OVERLAY_FS=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
         echo "CONFIG_DEBUG_KERNEL=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
         echo "CONFIG_EXPERT=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
@@ -86,7 +89,6 @@ jobs:
         echo "CONFIG_MMU=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
         echo "CONFIG_SHMEM=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
         echo "CONFIG_AIO=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
-        echo "CONFIG_MODULE_UNLOAD=y" >> arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
 
         if [ ${{ env.DISABLE-LTO }} = true ]; then
             sed -i 's/CONFIG_LTO=y/CONFIG_LTO=n/' arch/${{ env.TARGET_ARCH }}/configs/${{ env.KERNEL_DEFCONFIG }}
