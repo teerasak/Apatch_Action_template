@@ -161,7 +161,7 @@ jobs:
         git clone https://github.com/Yervant7/Apatch_Action_template -b main yv
         cd android-kernel
         git apply $GITHUB_WORKSPACE/kernel_workspace/yv/module_fix.patch
-        cp $GITHUB_WORKSPACE/kernel_workspace/yv/apatch $GITHUB_WORKSPACE/kernel_workspace/android-kernel
+        cp -r $GITHUB_WORKSPACE/kernel_workspace/yv/apatch $GITHUB_WORKSPACE/kernel_workspace/android-kernel
 
     - name: Setup Configuration for Kernel
       run: |
