@@ -1,0 +1,39 @@
+menu "APatch Support"
+
+config APATCH_SUPPORT
+
+	  bool "Basic APatch support"
+
+	  default n
+
+	  help
+
+	    	Enable basic APatch support in-kernel.
+
+    select EXPERT
+
+    select KALLSYMS
+
+    select KALLSYMS_ALL
+
+    select DEBUG_KERNEL
+
+    select OVERLAY_FS
+
+    select PRINTK
+
+    select MMU
+    
+    select SHMEM
+
+    select AIO
+
+    select MODULES
+
+    select MODULE_UNLOAD
+
+    select MODULE_FORCE_LOAD
+
+    select MODULE_FORCE_UNLOAD
+
+endmenu
