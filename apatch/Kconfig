@@ -2,13 +2,13 @@ menu "APatch Support"
 
 config APATCH_SUPPORT
 
-	  bool "Basic APatch support"
+	bool "Basic APatch support"
 
-	  default n
+	default n
 
-	  help
+	help
 
-	    	Enable basic APatch support in-kernel.
+	    Enable basic APatch support in-kernel.
 
     select EXPERT
 
@@ -28,7 +28,21 @@ config APATCH_SUPPORT
 
     select AIO
 
-    select MODULES
+    
+
+config APATCH_FIX_MODULES
+
+	tristate "Fix kernel modules in APatch"
+
+	default y if APATCH_SUPPORT
+
+	depends on APATCH_SUPPORT
+
+	help
+
+		Enable load modules.
+
+	select MODULES
 
     select MODULE_UNLOAD
 
