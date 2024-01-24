@@ -170,7 +170,7 @@ jobs:
         echo 'source "apatch/Kconfig"' >> arch/${{ env.ARCH }}/Kconfig
         echo "CONFIG_APATCH_SUPPORT=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         echo "CONFIG_APATCH_FIX_MODULES=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-        echo "CONFIG_APATCH_CUSTOMS=y" >> arch${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
+        echo "CONFIG_APATCH_CUSTOMS=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         sed -i 's/CONFIG_LOCALVERSION_AUTO=y/CONFIG_LOCALVERSION_AUTO=n/' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
 
         if [ ${{ env.DISABLE-LTO }} = true ]; then
